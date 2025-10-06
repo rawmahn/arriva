@@ -5,10 +5,32 @@ const {setGlobalOptions} = require("firebase-functions");
 const {onRequest} = require("firebase-functions/https");
 const logger = require("firebase-functions/logger");
 
+const cors = require("cors");
+const corsHandler = cors({
+    origin: [
+        "https://arriva-500b3.firebaseapp.com",
+        "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true
+});
+
 
 setGlobalOptions({maxInstances: 10});
 
-const checkAuth = (request, response) => {
+const checkAuthAndCors = (request, response) => {
+    // Always run CORS handler first
+    let corsHandled = false;
+    corsHandler(request, response, () => {
+        corsHandled = true;
+    });
+    // If this is a preflight request, return immediately after CORS
+    if (request.method === "OPTIONS") {
+        response.status(204).end();
+        return false;
+    }
+    if (!corsHandled) return false;
+
     const authToken = process.env.AUTH_TOKEN;
     let token;
     token = request.body?.data?.token || request.query?.token;
@@ -32,9 +54,9 @@ if (!OPENAI_API_KEY) {
 }
 
 
-const auth = (handler) => {
+const withAuthAndCors = (handler) => {
     return (request, response) => {
-        if (checkAuth(request, response)) {
+        if (checkAuthAndCors(request, response)) {
             return handler(request, response);
         }
     }
@@ -95,7 +117,6 @@ const getNearbyPlaces = async (request, response) => {
 Proxy the photo request to avoid exposing the API key on the client side.
  */
 const getPlacePhoto = async (req, res) => {
-    // res.set("Access-Control-Allow-Origin", "*");
 
     // Get the photo_reference and maxwidth from the query parameters
     const {photo_reference, maxwidth = 800} = req.query;
@@ -124,6 +145,8 @@ const getPlacePhoto = async (req, res) => {
     }
 
 }
-exports.getEphemeralKey = onRequest(auth(getEphemeralKey));
-exports.getNearbyPlaces = onRequest(auth(getNearbyPlaces));
-exports.getPlacePhoto = onRequest(auth(getPlacePhoto));
+
+// Wrap each handler with auth
+exports.getEphemeralKey = onRequest(withAuthAndCors(getEphemeralKey));
+exports.getNearbyPlaces = onRequest(withAuthAndCors(getNearbyPlaces));
+exports.getPlacePhoto = onRequest(withAuthAndCors(getPlacePhoto));
