@@ -1,0 +1,89 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+.message {
+    /*make it 2x large*/
+    font-size: 2em;
+    text-align: left;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.mic-icon {
+  color: #e74c3c;
+  display: inline-block;
+  animation: micPulse 1.2s infinite;
+  filter: drop-shadow(0 0 6px #e74c3c);
+}
+
+@keyframes micPulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px #e74c3c);
+  }
+  50% {
+    transform: scale(1.07);
+    filter: drop-shadow(0 0 10px #e74c3c);
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px #e74c3c);
+  }
+}
+
+.thinking-div {
+  position: fixed;
+  top: 2em;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 1em 2em;
+  border-radius: 1em;
+  font-size: 1.2em;
+  opacity: 1;
+  transition: opacity 1.5s ease;
+  z-index: 1000;
+}
+.thinking-div.fade-out {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
