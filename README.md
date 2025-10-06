@@ -1,16 +1,27 @@
-# React + Vite
+# A hands-free Travel Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A hands-free OpenAI-powered agent for travel advice and local recommendations.
+The idea is that you can talk to the agent while on the go, it knows the context of your trip, and can help you find places to eat, visit, and explore nearby.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Conversational AI:** A hands-free chat with an OpenAI-powered agent for travel advice and local recommendations.
+- **Nearby Place Search:** Find restaurants, hotels, museums, and more near your location, with filters for distance, open hours, and keywords.
+- **Photo Integration:** View images of recommended places directly in the UI.
+- **Voice Agent Integration:** Real-time interaction with the agent using OpenAI's Realtime Agents.
+- **Firebase Backend:** Secure backend with Firebase Cloud Functions and hosting.
+- **Secure API Access:** Protected endpoints for external API calls (e.g., Google Places).
 
-## React Compiler
+## How It Works
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- The user talks to the travel assistant via voice
+- The OpenAI agent receives user prompts, can call tools to fetch weather, search for places, and update the UI.
+- Place search results and photos are displayed in markdown format in the chat.
+- Backend functions handle secure API requests and data fetching.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Example Prompts
+- "Where could I eat near my hotel?"
+- "What museums can I visit during my stay?"
+- "Find me a good coffee shop nearby."
+- "What are some popular tourist attractions around here?"
+- "Can you recommend a nice place for dinner tonight?"
